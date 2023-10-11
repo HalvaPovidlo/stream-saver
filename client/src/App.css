@@ -1,0 +1,45 @@
+.modal-size {
+    margin: auto;
+    width: 70vw;
+    height: 70vh;
+
+}
+
+.sigma-text {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 0 3vw;
+    font-family: Manrope, serif;
+    font-size: 5.2vw;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    color: #fff;
+    opacity: .03;
+    text-shadow: 0 0 1px #000;
+}
+
+.navbar {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    opacity: .8;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.user-email {
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: #fff;
+    font-weight: 400;
+    text-transform: none;
+}
+
+.App {
+    height: 100vh;
+    width: 100vw;
+}
