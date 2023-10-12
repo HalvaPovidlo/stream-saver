@@ -10,6 +10,7 @@ const fetchTwitchChannelInfo = require("./twitchApi/fetchTwitchChannelInfo")
 const app = express()
 const startStreamLoading = require("./twitchApi/startStreamLoading")
 const {Channel} = require("./models/models");
+const loadStreamPreview = require("./twitchApi/loadStreamPreview");
 
 
 app.use(cors())
@@ -32,24 +33,26 @@ const start = async () => {
         let downloadingChannels = []
         //проверить поведеение при повторном включении стрима
         setInterval(async () => {
-            console.log("now:", new Date())
-            console.log("loading:", downloadingChannels)
+                console.log("now:", new Date())
+                console.log("loading:", downloadingChannels)
 
-            let channels = await Channel.findAll({where: {isCurrentlyFollowed: true}})
+                let channels = await Channel.findAll({where: {isCurrentlyFollowed: true}})
 
-            for (const channel of channels) {
-                const name = channel.dataValues.name;
-                const channelInfo = await fetchTwitchChannelInfo(name, app.get("token"))
-                const streamInfo = channelInfo[0]
-                if (streamInfo && streamInfo.type === 'live' && !downloadingChannels.includes(name)) {
-                    await startStreamLoading(name, channel.dataValues.id, streamInfo.title);
-                    downloadingChannels.push(name);
-                } else if (!streamInfo && downloadingChannels.includes(name)) {
-                    const index = downloadingChannels.indexOf(name)
-                    downloadingChannels.splice(index, 1);
+                for (const channel of channels) {
+                    const name = channel.dataValues.name;
+                    const channelInfo = await fetchTwitchChannelInfo(name, app.get("token"))
+                    const streamInfo = channelInfo[0]
+
+                    if (streamInfo && streamInfo.type === 'live' && !downloadingChannels.includes(name)) {
+                        await startStreamLoading(name, channel.dataValues.id, streamInfo.title, streamInfo.thumbnail_url);
+                        downloadingChannels.push(name);
+                    } else if (!streamInfo && downloadingChannels.includes(name)) {
+                        const index = downloadingChannels.indexOf(name)
+                        downloadingChannels.splice(index, 1);
+                    }
                 }
-            }
-        }, 5000)
+            }, 5000
+        )
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     } catch (error) {
         console.error(error)

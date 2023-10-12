@@ -12,6 +12,8 @@ const User = sequelize.define('user', {
 const Follow = sequelize.define('follow', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
+
+
 const Channel = sequelize.define('channel', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
@@ -19,16 +21,20 @@ const Channel = sequelize.define('channel', {
     platform: {type: DataTypes.STRING, allowNull: false}
 })
 
+
 const Video = sequelize.define('video', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
     date: {type: DataTypes.DATE, defaultValue: DataTypes.NOW, allowNull: false},
     path: {type: DataTypes.STRING, allowNull: false},
+    previewPath: {type: DataTypes.STRING, allowNull: true},
 })
+
 
 const UserVideo = sequelize.define('user_video', {
       id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
+
 
 User.belongsToMany(Channel, { through: Follow });
 Channel.belongsToMany(User, { through: Follow });
