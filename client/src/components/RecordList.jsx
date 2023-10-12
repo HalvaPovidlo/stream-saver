@@ -15,7 +15,7 @@ const RecordList = observer((props) => {
                 Recorded videos
             </Typography>
             {records.records.map(r =>
-                <Record key={r.id} handleOpen={props.handleOpen} setVideoJsOptions={props.setVideoJsOptions}
+                <Record key={r.id} openPlayer={props.openPlayer}
                         record={r}></Record>)}
         </List>
     )

@@ -4,16 +4,19 @@ import previewAltImg from "/preview_not_found.png"
 import VideoJS from "./VideoJs.jsx";
 
 const Record = (props) => {
+    const {record, openPlayer} = props
 
-    const {record, setVideoJsOptions, handleOpen} = props
     const [isHovered, setIsHovered] = useState(false);
-    const videoOptions = {
+    const videoSrc = `${import.meta.env.VITE_REACT_APP_API_URL}api/video/${record.id}/file/?token=${localStorage.getItem('token')}`
+
+    const previewVideoOptions = {
+        className: "preview-player",
         autoplay: true,
         controls: true,
         fluid: true,
         muted: true,
         sources: [{
-            src: `${import.meta.env.VITE_REACT_APP_API_URL}api/video/${record.id}/file/?token=${localStorage.getItem('token')}`,
+            src: videoSrc,
             type: 'video/mp4'
         }],
         controlBar: {
@@ -26,14 +29,13 @@ const Record = (props) => {
         },
     }
 
+
     function handleClick() {
-        setVideoJsOptions(videoOptions)
-        handleOpen();
+        openPlayer(videoSrc);
     }
 
     function handlePlayerReady(player) {
         var controlBar = player.controlBar;
-
         controlBar.on('click', function (event) {
             // prevents opening player when user clicks progressBar
             event.stopPropagation();
@@ -45,6 +47,7 @@ const Record = (props) => {
               onClick={handleClick}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
+              className="record-card"
         >
             <CardContent>
                 {!isHovered ?
@@ -61,7 +64,7 @@ const Record = (props) => {
                     >
                     </CardMedia>
                     :
-                    <VideoJS options={videoOptions} onReady={handlePlayerReady}/>}
+                    <VideoJS options={previewVideoOptions} onReady={handlePlayerReady}/>}
                 <Link>
                     {
                         record.name

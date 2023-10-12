@@ -13,10 +13,22 @@ const MainPage = observer(() => {
     const {records} = useContext(Context)
 
     const [isPlayerOpen, setIsPlayerOpen] = useState(false);
-    const handleOpen = () => setIsPlayerOpen(true);
+    const [playerOptions, setPlayerOptions] = useState(null)
+    const openPlayer = (videoURL) => {
+        setPlayerOptions({
+            autoplay:true,
+            controls: true,
+            fluid: true,
+            sources: [{
+                src: videoURL,
+                type: 'video/mp4'
+            }],
+        })
+        setIsPlayerOpen(true)
+    };
+
     const handleClose = () => setIsPlayerOpen(false);
 
-    const [videoJsOptions, setVideoJsOptions] = useState(null)
 
     useEffect(() => {
         fetchRecords()
@@ -36,9 +48,9 @@ const MainPage = observer(() => {
         flexDirection: 'row',
         justifyContent: "space-between"
     }}>
-        <RecordList setVideoJsOptions={setVideoJsOptions} handleOpen={handleOpen}/>
+        <RecordList openPlayer={openPlayer}/>
         <FollowList/>
-        <VideoPlayer isPlayerOpen={isPlayerOpen} videoJsOptions={videoJsOptions} handleOpen={handleOpen}
+        <VideoPlayer isPlayerOpen={isPlayerOpen} videoJsOptions={playerOptions}
                      handleClose={handleClose}></VideoPlayer>
     </div>
 
