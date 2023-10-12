@@ -5,6 +5,7 @@ const auth = require("../middleware/AuthMiddleware")
 
 
 
-router.get('/file/:id',auth,videoController.getFile)
+router.get('/:id/file/',auth,videoController.getFile)
+router.get('/:id/previewImage',auth,videoController.getPreviewImage)
 
 module.exports = router;
