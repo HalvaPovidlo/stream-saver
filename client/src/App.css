@@ -7,10 +7,11 @@
 
 .sigma-text {
     position: absolute;
+
     z-index: -1;
     left: 0;
     right: 0;
-    margin: 0 auto;
+    margin: 0;
     padding: 0 3vw;
     font-family: Manrope, serif;
     font-size: 5.2vw;
@@ -40,10 +41,66 @@
 }
 
 .App {
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
+    max-width: 100%;
 }
 
-.record-card .video-js .vjs-big-play-button{
+.record-card .video-js .vjs-big-play-button {
     display: none;
 }
+
+
+.follow-list {
+    width: 20%
+}
+
+.app-router {
+    margin: 0;
+}
+
+.carousel {
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    align-items: center;
+}
+
+.carousel .record-card {
+    flex-basis: 20rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+    height: 260px;
+    background: rgba(255, 255, 255, 0.2);
+
+    margin: 0.4rem
+}
+
+.carousel-videos {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    width:100%
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+

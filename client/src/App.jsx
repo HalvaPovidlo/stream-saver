@@ -30,7 +30,6 @@ const App = observer(() => {
         return <CircularProgress/>
     }
     return (
-
         <div className={"App"}>
             <ErrorBoundary fallbackRender={ErrorInfoPage}>
                 <BrowserRouter>

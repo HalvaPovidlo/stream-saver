@@ -1,7 +1,7 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User, Follow} = require('../models/models')
+const {User, Follow, Channel} = require('../models/models')
 
 const generateJwt = (id, email, role) => {
     return jwt.sign(
@@ -71,7 +71,9 @@ class UserController {
             const userId = req.user.id;
             const user = await User.findByPk(userId);
 
-            const videos = await user.getVideos();
+            const videos = await user.getVideos({
+                include:[Channel]
+            });
             return res.status(200).json(videos);
         } catch (error) {
             console.error('Error while fetching video data:', error);

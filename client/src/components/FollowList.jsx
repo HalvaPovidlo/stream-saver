@@ -1,24 +1,25 @@
 import React, {useContext, useState} from 'react';
 import Context from "../Context.jsx";
 import {observer} from "mobx-react-lite";
-import {fetchChannels, followChannel, unfollowChannel} from "../http/recordAPI.jsx";
+import {fetchActiveFollows, followChannel, unfollowChannel} from "../http/recordAPI.jsx";
 import {Button,  List, ListItem, TextField} from "@mui/material";
 
 const FollowList = observer(() => {
     const {records} = useContext(Context)
-    const channels = records.channels
+    const activeFollows = records.activeFollows
+
     const [channelToFollow, setChannelToFollow] = useState('')
 
     const [errorOccurred, setErrorOccurred] = useState(false);
     const [errorText, setErrorText] = useState('');// todo: diff errors handling (validation and alerts)
     return (
-        <List>
-            {channels.map(c => <ListItem key={c.id}>{c.name}
+        <List className = 'follow-list'>
+            {activeFollows.map(c => <ListItem key={c.id}>{c.name}
                 <Button onClick={async () => {
                     try {
                         await unfollowChannel(c.id)
-                        fetchChannels().then(data => {
-                            records.setChannels(data)
+                        fetchActiveFollows().then(data => {
+                            records.setActiveFollows(data)
                         })
                     } catch (e) {
                         alert(e)
@@ -36,11 +37,11 @@ const FollowList = observer(() => {
                     try {
                         await followChannel(channelToFollow, 'twitch')
 
-                        const channels = await fetchChannels()
+                        const channels = await fetchActiveFollows()
 
                         setErrorOccurred(false)
                         setErrorText("")
-                        records.setChannels(channels)
+                        records.setActiveFollows(channels)
                     } catch (e) {
                         setErrorOccurred(true)
                         setErrorText(e.response.data.message)

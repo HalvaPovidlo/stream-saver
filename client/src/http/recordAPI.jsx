@@ -7,7 +7,7 @@ export const fetchRecords = async () => {
     const {data} = await $authHost.get('api/user/videos')
     return data
 }
-export const fetchChannels = async () => {
+export const fetchActiveFollows = async () => {
     const {data} = await $authHost.get('api/user/channels')
     return data
 }

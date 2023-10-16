@@ -11,4 +11,6 @@ router.get('/videos', authMiddleware, userController.getLoadedVideos)
 router.get('/channels', authMiddleware, userController.getFollowedChannels)
 router.get('/follows', authMiddleware, userController.getUserFollows)
 
+
+
 module.exports = router;

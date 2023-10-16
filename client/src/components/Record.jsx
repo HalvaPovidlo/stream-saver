@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Card, CardContent, CardMedia, ImageListItem, Link} from "@mui/material";
+import {Box, Card, CardContent, CardMedia, ImageListItem, Link, Typography} from "@mui/material";
 import previewAltImg from "/preview_not_found.png"
 import VideoJS from "./VideoJs.jsx";
 
@@ -43,18 +43,18 @@ const Record = (props) => {
     }
 
     return (
-        <Card sx={{width: 330, height: 260, margin: 5, backgroundColor: "transparent"}}
-              onClick={handleClick}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              className="record-card"
+        <Card
+            onClick={handleClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="record-card"
         >
-            <CardContent>
+            <CardContent sx={{padding: "0px"}}>
                 {!isHovered ?
                     <CardMedia
+
                         component="img"
                         image={`${import.meta.env.VITE_REACT_APP_API_URL}api/video/${record.id}/previewImage/?token=${localStorage.getItem('token')}`}
-                        width="100%"
                         alt={`${record.name}`}
                         onError={(e) => {
                             e.target.onerror = null;
@@ -65,11 +65,14 @@ const Record = (props) => {
                     </CardMedia>
                     :
                     <VideoJS options={previewVideoOptions} onReady={handlePlayerReady}/>}
-                <Link>
-                    {
-                        record.name
-                    }
-                </Link>
+                <Box sx={{padding: "5px"}}>
+                    <Link sx={{cursor: "pointer", textDecoration: "none"}}>
+                        <Typography sx={{textOverflow: 'ellipsis', overflow: "hidden", whiteSpace: "nowrap"}}
+                                    variant="h6">{record.name}</Typography>
+                        <Typography sx={{textOverflow: 'ellipsis', overflow: "hidden", whiteSpace: "nowrap",fontWeight:"bold"}}
+                                    variant="h5">{record.channel.name}</Typography>
+                    </Link>
+                </Box>
             </CardContent>
         </Card>
     );

@@ -35,6 +35,9 @@ const UserVideo = sequelize.define('user_video', {
       id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
+const ChannelVideo = sequelize.define('channel_video', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+})
 
 User.belongsToMany(Channel, { through: Follow });
 Channel.belongsToMany(User, { through: Follow });

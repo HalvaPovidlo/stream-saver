@@ -2,56 +2,51 @@ import {makeAutoObservable} from "mobx";
 
 export default class RecordStore {
     constructor() {
-        this._follows = []
         this._records = []
-        this._channels = []
-        this._page = 1
-        this._totalCount = 0
-        this._limit = 40
+        this._activeFollows = []
         makeAutoObservable(this)
     }
 
-    setPage(page) {
-        this._page = page
-    }
-
-    setTotalCount(totalCount) {
-        this._totalCount = totalCount
-    }
-
-    setLimit(limit) {
-        this._limit = limit
-    }
-
-    setFollows(follows) {
-        this._follows = follows
-    }
-
     setRecords(records) {
+        records = records.sort((r1, r2) => (new Date(r2.date) - new Date(r1.date)))
         this._records = records
-    }
-    setChannels(channels){
-        this._channels = channels
-    }
-
-    get page() {
-        return this._page
-    }
-    get totalCount() {
-        return this._totalCount
-    }
-    get limit() {
-        return this._limit
-    }
-    get follows() {
-        return this._follows
     }
 
     get records() {
         return this._records
     }
-    get channels() {
-        return this._channels
+
+    setActiveFollows(activeFollows) {
+        this._activeFollows = activeFollows
     }
 
+
+    get activeFollows() {
+        return this._activeFollows
+    }
+
+
+    groupVideosByChannelName() {
+        const records = this.records;
+
+        const groupedObj = records.reduce((acc, record) => {
+            const {channelId} = record;
+            if (!acc[channelId]) {
+                acc[channelId] = [];
+            }
+            acc[channelId].push(record);
+            return acc;
+        }, {});
+
+        const groupedArray = Object.values(groupedObj);
+        return groupedArray;
+    }
+    /*
+ groupVideosByChannelName() {
+        const records = this.records
+        const groupedObj = Object.groupBy(records, ({channelId}) => channelId)
+
+        const groupedArray = [...Object.values(groupedObj).map(r => r)]//grouping
+        return groupedArray
+    } */
 }

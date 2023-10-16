@@ -40,7 +40,7 @@ def download_stream(channel_url):
 
     output = os.path.normpath(output)
     f = open(output, "wb")
-    k = 0
+
     while True:
         # Чтение данных из стрима
         data = fd.read(1024)
@@ -49,9 +49,7 @@ def download_stream(channel_url):
         # Запись данных в файл
         f.write(data)
         # Закрываем файл и стрим после окончания записи
-        k += 1
-        if k == 3000:
-            break
+
     fd.close()
     f.close()
     next_output = os.path.join(path, output_file+f'({i})'+'.mp4')

@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import RecordList from "../components/RecordList.jsx";
 import FollowList from "../components/FollowList.jsx";
 import {useContext, useEffect, useState} from "react";
-import {fetchChannels, fetchRecords} from "../http/recordAPI.jsx";
+import {fetchActiveFollows,  fetchRecords} from "../http/recordAPI.jsx";
 import Context from "../Context.jsx";
 import VideoPlayer from "../components/VideoPlayer.jsx";
 import {useNavigate} from "react-router-dom";
@@ -32,17 +32,18 @@ const MainPage = observer(() => {
 
     useEffect(() => {
         fetchRecords()
-            .then(data => records.setRecords(data))
+            .then(data => {
+                records.setRecords(data)})
             .catch(e => alert(e))
 
-        fetchChannels()
+        fetchActiveFollows()
             .then(data => {
-                console.log(data);
-                records.setChannels(data)
+                records.setActiveFollows(data)
             })
             .catch(e => alert(e))
 
     })
+
     return <div style={{
         display: 'flex',
         flexDirection: 'row',

@@ -16,9 +16,9 @@ async function fetchTwitchChannelInfo(channelName, accessToken) {
         return response.data.data;
 
     } catch (error) {
-        console.error(`Error fetching Twitch channel info: ${error.response.data.message}`);
+        console.error(`Error fetching Twitch channel info: ${error}`);
         if (error.response.data.status === 400) {
-            throw ApiError.badRequest(error.response.data.message)
+            throw ApiError.badRequest(error)
         } else throw ApiError.internal('Unexpected error')
     }
 }
