@@ -2,13 +2,17 @@
   margin: auto;
   width: 70vw;
   height: 70vh;
+
 }
+
 HTML {
   cursor: pointer;
 }
+
 body {
   cursor: default;
 }
+
 .sigma-text {
   position: absolute;
   z-index: -1;
@@ -22,17 +26,19 @@ body {
   font-weight: 800;
   line-height: normal;
   color: #fff;
-  opacity: 0.03;
+  opacity: .03;
   text-shadow: 0 0 1px #000;
 }
+
 .navbar {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 3px;
-  opacity: 0.8;
+  opacity: .8;
   color: #fff;
   text-transform: uppercase;
 }
+
 .user-email {
   font-size: 15px;
   margin-bottom: 4px;
@@ -40,59 +46,73 @@ body {
   font-weight: 400;
   text-transform: none;
 }
+
 .App {
   width: 100vw;
   height: 100vh;
   max-width: 100%;
 }
+
+
 .follow-list {
-  width: 20%;
+  width: 20%
 }
+
 .app-router {
   margin: 0;
 }
+
 .carousel {
   display: flex;
   flex-direction: row;
   width: 80vw;
   align-items: center;
+
+  .record-card {
+    cursor: pointer;
+    flex-basis: 20rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+    height: 260px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0.4rem;
+
+    .vjs-big-play-button {
+      display: none;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .carousel-videos {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    width: 100%
+  }
 }
-.carousel .record-card {
-  cursor: pointer;
-  flex-basis: 20rem;
-  flex-shrink: 0;
-  flex-grow: 0;
-  height: 260px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 0.4rem;
-}
-.carousel .record-card .vjs-big-play-button {
-  display: none;
-}
-.carousel .record-card:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-.carousel .carousel-videos {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  width: 100%;
-}
+
+
 ::-webkit-scrollbar {
   width: 10px;
   cursor: pointer !important;
+  //todo: improve cursor ehavior under carousel
+  &-track {
+    background: transparent;
+    cursor: pointer !important;
+  }
+
+  &-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    cursor: pointer !important;
+
+    &:hover {
+      cursor: pointer !important;
+      background: rgba(255, 255, 255, 0.5);
+    }
+  }
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-  cursor: pointer !important;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 30px;
-  cursor: pointer !important;
-}
-::-webkit-scrollbar-thumb:hover {
-  cursor: pointer !important;
-  background: rgba(255, 255, 255, 0.5);
-}
-/*# sourceMappingURL=App.css.map */
+

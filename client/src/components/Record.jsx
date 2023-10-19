@@ -66,7 +66,7 @@ const Record = (props) => {
                     :
                     <VideoJS options={previewVideoOptions} onReady={handlePlayerReady}/>}
                 <Box sx={{padding: "5px"}}>
-                    <Link sx={{cursor: "pointer", textDecoration: "none"}}>
+                    <Link sx={{ textDecoration: "none"}}>
                         <Typography sx={{textOverflow: 'ellipsis', overflow: "hidden", whiteSpace: "nowrap"}}
                                     variant="h6">{record.name}</Typography>
                         <Typography sx={{textOverflow: 'ellipsis', overflow: "hidden", whiteSpace: "nowrap",fontWeight:"bold"}}
