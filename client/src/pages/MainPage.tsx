@@ -1,21 +1,24 @@
 import {observer} from "mobx-react-lite";
 
 
-import RecordList from "../components/RecordList.jsx";
-import FollowList from "../components/FollowList.jsx";
+import RecordList from "../components/RecordList";
+import FollowList from "../components/FollowList";
 import {useContext, useEffect, useState} from "react";
-import {fetchActiveFollows,  fetchRecords} from "../http/recordAPI.jsx";
-import Context from "../Context.jsx";
-import VideoPlayer from "../components/VideoPlayer.jsx";
+import {fetchActiveFollows,  fetchRecords} from "../http/recordAPI";
+import Context from "../Context";
+import VideoPlayer from "../components/VideoPlayer";
 import {useNavigate} from "react-router-dom";
+import React from "react";
 
 const MainPage = observer(() => {
+    // @ts-expect-error TS(2339): Property 'records' does not exist on type 'null'.
     const {records} = useContext(Context)
 
     const [isPlayerOpen, setIsPlayerOpen] = useState(false);
     const [playerOptions, setPlayerOptions] = useState(null)
-    const openPlayer = (videoURL) => {
+    const openPlayer = (videoURL: any) => {
         setPlayerOptions({
+            // @ts-expect-error TS(2345): Argument of type '{ autoplay: boolean; controls: b... Remove this comment to see the full error message
             autoplay:true,
             controls: true,
             fluid: true,
@@ -49,7 +52,9 @@ const MainPage = observer(() => {
         flexDirection: 'row',
         justifyContent: "space-between"
     }}>
+        {//  @ts-expect-error
         <RecordList openPlayer={openPlayer}/>
+        }
         <FollowList/>
         <VideoPlayer isPlayerOpen={isPlayerOpen} videoJsOptions={playerOptions}
                      handleClose={handleClose}></VideoPlayer>

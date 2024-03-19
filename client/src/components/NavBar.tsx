@@ -4,12 +4,16 @@ import {observer} from "mobx-react-lite";
 import {useNavigate} from 'react-router-dom'
 
 import {AppBar, Box, Button, Grid, Toolbar,} from "@mui/material";
-import Context from "../Context.jsx";
-import {LOGIN_ROUTE, MAIN_PAGE_ROUTE} from "../utils/constants.jsx";
+// @ts-expect-error TS(6142): Module '../Context.jsx' was resolved to 'C:/git/st... Remove this comment to see the full error message
+import Context from "../Context.tsx";
+// @ts-expect-error TS(6142): Module '../utils/constants.jsx' was resolved to 'C... Remove this comment to see the full error message
+import {LOGIN_ROUTE, MAIN_PAGE_ROUTE} from "../utils/constants.tsx";
+import React from 'react';
 
 
 const NavBar = observer(() => {
     const navigate = useNavigate();
+    // @ts-expect-error TS(2339): Property 'user' does not exist on type 'null'.
     const {user} = useContext(Context)
 
     const logout = () => {

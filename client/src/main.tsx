@@ -4,22 +4,22 @@ import ReactDOM from 'react-dom/client'
 
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Context from "./Context.jsx"
+import Context from "./Context"
 import 'normalize.css'
 
 
-import App from "./App.jsx"
-import UserStore from "./store/UserStore.jsx";
-import RecordStore from "./store/RecordStore.jsx";
+import App from "./App"
+import UserStore from "./store/UserStore";
+import RecordStore from "./store/RecordStore";
 
 
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
+        // @ts-expect-error TS(2322): Type '{ mode: "dark"; white: string; }' is not ass... Remove this comment to see the full error message
         white: "white"
     },
     components: {
-
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
@@ -34,7 +34,7 @@ const darkTheme = createTheme({
 });
 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <ThemeProvider theme={darkTheme}>
             <Context.Provider value={{

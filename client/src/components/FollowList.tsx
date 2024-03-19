@@ -1,10 +1,11 @@
 import React, {useContext, useState} from 'react';
-import Context from "../Context.jsx";
+import Context from "../Context";
 import {observer} from "mobx-react-lite";
-import {fetchActiveFollows, followChannel, unfollowChannel} from "../http/recordAPI.jsx";
+import {fetchActiveFollows, followChannel, unfollowChannel} from "../http/recordAPI";
 import {Button,  List, ListItem, TextField} from "@mui/material";
 
 const FollowList = observer(() => {
+    // @ts-expect-error TS(2339): Property 'records' does not exist on type 'null'.
     const {records} = useContext(Context)
     const activeFollows = records.activeFollows
 
@@ -14,7 +15,7 @@ const FollowList = observer(() => {
     const [errorText, setErrorText] = useState('');// todo: diff errors handling (validation and alerts)
     return (
         <List className = 'follow-list'>
-            {activeFollows.map(c => <ListItem key={c.id}>{c.name}
+            {activeFollows.map((c: any) => <ListItem key={c.id}>{c.name}
                 <Button onClick={async () => {
                     try {
                         await unfollowChannel(c.id)
@@ -44,7 +45,9 @@ const FollowList = observer(() => {
                         records.setActiveFollows(channels)
                     } catch (e) {
                         setErrorOccurred(true)
+                        // @ts-expect-error TS(2571): Object is of type 'unknown'.
                         setErrorText(e.response.data.message)
+                        // @ts-expect-error TS(2571): Object is of type 'unknown'.
                         console.log(e.response.data.message)
                     }
                 }

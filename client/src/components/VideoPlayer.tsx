@@ -1,8 +1,9 @@
 import {Box, Modal} from "@mui/material";
-import VideoJS from "./VideoJs.jsx";
+import VideoJS from "./VideoJs";
+import React from "react";
 
 
-const VideoPlayer = (props) => {
+const VideoPlayer = (props: any) => {
     return (
         <Modal className='modal-size'
                open={props.isPlayerOpen}

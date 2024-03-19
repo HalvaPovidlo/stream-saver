@@ -1,6 +1,6 @@
 import {$authHost} from "./index";
 import {useContext} from "react";
-import Context from "../Context.jsx";
+import Context from "../Context";
 
 
 export const fetchRecords = async () => {
@@ -12,12 +12,12 @@ export const fetchActiveFollows = async () => {
     return data
 }
 
-export const followChannel = async(channelName,channelPlatform)=>{
+export const followChannel = async(channelName: any,channelPlatform: any)=>{
     const {data} = await $authHost.post('api/follow',{channelName,channelPlatform})
         return data;
 }
 
-export const unfollowChannel = async(channelId)=>{
+export const unfollowChannel = async (channelId: any) => {
     const {data} = await $authHost.delete(`api/follow?channelId=${channelId}`)
     return data;
 }

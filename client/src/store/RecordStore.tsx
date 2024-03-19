@@ -1,14 +1,17 @@
 import {makeAutoObservable} from "mobx";
 
 export default class RecordStore {
+    _activeFollows: any;
+    _records: any;
     constructor() {
         this._records = []
         this._activeFollows = []
         makeAutoObservable(this)
     }
 
-    setRecords(records) {
-        records = records.sort((r1, r2) => (new Date(r2.date) - new Date(r1.date)))
+    setRecords(records: any) {
+        // @ts-expect-error TS(2362): The left-hand side of an arithmetic operation must... Remove this comment to see the full error message
+        records = records.sort((r1: any, r2: any) => (new Date(r2.date) - new Date(r1.date)))
         this._records = records
     }
 
@@ -16,7 +19,7 @@ export default class RecordStore {
         return this._records
     }
 
-    setActiveFollows(activeFollows) {
+    setActiveFollows(activeFollows: any) {
         this._activeFollows = activeFollows
     }
 
@@ -29,7 +32,7 @@ export default class RecordStore {
     groupVideosByChannelName() {
         const records = this.records;
 
-        const groupedObj = records.reduce((acc, record) => {
+        const groupedObj = records.reduce((acc: any, record: any) => {
             const {channelId} = record;
             if (!acc[channelId]) {
                 acc[channelId] = [];

@@ -1,11 +1,13 @@
 import {Routes, Route, Navigate} from "react-router-dom"
-import {authRoutes, publicRoutes} from "../routes.jsx";
+import {authRoutes, publicRoutes} from "../routes";
 import {useContext} from "react";
-import Context from "../Context.jsx";
+import Context from "../Context";
 import {observer} from "mobx-react-lite";
+import React from "react";
 
 
 const AppRouter = observer(() => {
+    // @ts-expect-error TS(2339): Property 'user' does not exist on type 'null'.
     const {user} = useContext(Context)
     return (<>
             <div className="sigma-text test">

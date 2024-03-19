@@ -1,7 +1,8 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User, Follow, Channel} = require('../models/models')
+const {User, Follow, Channel} = require('../models/models');
+const { unregisterDecorator } = require('handlebars/runtime');
 
 const generateJwt = (id, email, role) => {
     return jwt.sign(
@@ -39,18 +40,20 @@ class UserController {
 
     async login(req, res, next) {
         try {
+           
             const {email, password} = req.body
 
             const user = await User.findOne({where: {email}})
+           
             if (!user) {
                 return next(ApiError.badRequest('User not found'))
             }
-
+            console.log(user)
             let comparePassword = bcrypt.compareSync(password, user.password)
+         
             if (!comparePassword) {
                 return next(ApiError.unauthorized('Incorrect password'))
             }
-
             const token = generateJwt(user.id, user.email, user.role)
             return res.json({token})
 

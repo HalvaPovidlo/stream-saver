@@ -2,7 +2,7 @@ import React from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css'
 
-export const VideoJs = (props) => {
+export const VideoJs = (props: any) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const {options, onReady} = props;
@@ -15,8 +15,10 @@ export const VideoJs = (props) => {
       const videoElement = document.createElement("video-js");
 
       videoElement.classList.add('vjs-big-play-centered');
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       videoRef.current.appendChild(videoElement);
 
+      // @ts-expect-error TS(2322): Type 'Player' is not assignable to type 'null'.
       const player = playerRef.current = videojs(videoElement, options, () => {
         videojs.log('player is ready');
         onReady && onReady(player);
@@ -27,7 +29,9 @@ export const VideoJs = (props) => {
     } else {
       const player = playerRef.current;
 
+      // @ts-expect-error TS(2339): Property 'autoplay' does not exist on type 'never'... Remove this comment to see the full error message
       player.autoplay(options.autoplay);
+      // @ts-expect-error TS(2339): Property 'src' does not exist on type 'never'.
       player.src(options.sources);
     }
   }, [options, videoRef]);
@@ -37,7 +41,9 @@ export const VideoJs = (props) => {
     const player = playerRef.current;
 
     return () => {
+      // @ts-expect-error TS(2339): Property 'isDisposed' does not exist on type 'neve... Remove this comment to see the full error message
       if (player && !player.isDisposed()) {
+        // @ts-expect-error TS(2339): Property 'dispose' does not exist on type 'never'.
         player.dispose();
         playerRef.current = null;
       }

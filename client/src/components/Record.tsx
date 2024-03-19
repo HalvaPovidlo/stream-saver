@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {Box, Card, CardContent, CardMedia, ImageListItem, Link, Typography} from "@mui/material";
 import previewAltImg from "/preview_not_found.png"
-import VideoJS from "./VideoJs.jsx";
+import VideoJS from "./VideoJs";
 
-const Record = (props) => {
+const Record = (props: any) => {
     const {record, openPlayer} = props
 
     const [isHovered, setIsHovered] = useState(false);
+    // @ts-expect-error TS(1343): The 'import.meta' meta-property is only allowed wh... Remove this comment to see the full error message
     const videoSrc = `${import.meta.env.VITE_REACT_APP_API_URL}api/video/${record.id}/file/?token=${localStorage.getItem('token')}`
 
     const previewVideoOptions = {
@@ -34,9 +35,9 @@ const Record = (props) => {
         openPlayer(videoSrc);
     }
 
-    function handlePlayerReady(player) {
+    function handlePlayerReady(player: any) {
         var controlBar = player.controlBar;
-        controlBar.on('click', function (event) {
+        controlBar.on('click', function (event: any) {
             // prevents opening player when user clicks progressBar
             event.stopPropagation();
         });
@@ -52,11 +53,11 @@ const Record = (props) => {
             <CardContent sx={{padding: "0px"}}>
                 {!isHovered ?
                     <CardMedia
-
                         component="img"
+                        //@ts-expect-error
                         image={`${import.meta.env.VITE_REACT_APP_API_URL}api/video/${record.id}/previewImage/?token=${localStorage.getItem('token')}`}
                         alt={`${record.name}`}
-                        onError={(e) => {
+                        onError={(e: any) => {
                             e.target.onerror = null;
                             e.target.src = previewAltImg;
                             console.log(e)

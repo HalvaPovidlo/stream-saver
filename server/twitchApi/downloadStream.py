@@ -41,14 +41,17 @@ def download_stream(channel_url):
     output = os.path.normpath(output)
     f = open(output, "wb")
 
-    while True:
-        # Чтение данных из стрима
-        data = fd.read(1024)
+    chunk_size = 1024  # Размер блока для чтения и записи (1 КБ)
+    bytes_to_read = 10 * 1024 * 1024  # Общее количество байт для чтения (30 МБ)
+    bytes_read = 0  # Инициализация счетчика прочитанных байт
+
+    # Чтение данных из стрима и запись в файл поблочно, пока не достигнуто общее количество байт для чтения
+    while bytes_read < bytes_to_read:
+        data = fd.read(chunk_size)
         if not data:
             break
-        # Запись данных в файл
         f.write(data)
-        # Закрываем файл и стрим после окончания записи
+        bytes_read += len(data)
 
     fd.close()
     f.close()

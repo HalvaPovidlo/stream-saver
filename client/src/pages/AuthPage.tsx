@@ -1,13 +1,15 @@
 import {useContext, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import Context from "../Context.jsx";
-import {LOGIN_ROUTE, MAIN_PAGE_ROUTE, REGISTRATION_ROUTE} from "../utils/constants.jsx";
-import {login, registration} from "../http/userAPI.jsx";
+import Context from "../Context";
+import {LOGIN_ROUTE, MAIN_PAGE_ROUTE, REGISTRATION_ROUTE} from "../utils/constants";
+import {login, registration} from "../http/userAPI";
 import {Button, Card, Container, FormControl, TextField} from "@mui/material";
+import React from 'react';
 
 const AuthPage = observer(() => {
     let navigate = useNavigate()
+    // @ts-expect-error TS(2339): Property 'user' does not exist on type 'null'.
     let {user} = useContext(Context);
     const location = useLocation();
     const isLogin = location.pathname === LOGIN_ROUTE;
@@ -29,6 +31,7 @@ const AuthPage = observer(() => {
             navigate(MAIN_PAGE_ROUTE)
 
         } catch (e) {
+            // @ts-expect-error TS(2571): Object is of type 'unknown'.
             alert(e.response.data.message())
         }
     }

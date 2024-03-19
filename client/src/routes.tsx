@@ -5,13 +5,14 @@ import {
     REGISTRATION_ROUTE,
     MAIN_PAGE_ROUTE,
     PAGE_404_ROUTE
-} from "./utils/constants.jsx";
+} from "./utils/constants";
 
+import React from "react";
+import AuthPage from "./pages/AuthPage";
+import MainPage from "./pages/MainPage";
+import AdminPage from "./pages/AdminPage";
+import Page404 from "./pages/Page404";
 
-import AuthPage from "./pages/AuthPage.jsx";
-import MainPage from "./pages/MainPage.jsx";
-import AdminPage from "./pages/AdminPage.jsx";
-import Page404 from "./pages/Page404.jsx";
 
 
 export const authRoutes = [
@@ -35,7 +36,7 @@ export const publicRoutes = [
         path: REGISTRATION_ROUTE,
         Element: <AuthPage/>,
     },
-     {
+    {
         path: PAGE_404_ROUTE,
         Element: <Page404/>,
     },
