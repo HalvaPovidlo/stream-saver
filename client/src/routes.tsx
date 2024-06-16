@@ -1,4 +1,3 @@
-
 import {
     ADMIN_ROUTE,
     LOGIN_ROUTE,
@@ -12,8 +11,6 @@ import AuthPage from "./pages/AuthPage";
 import MainPage from "./pages/MainPage";
 import AdminPage from "./pages/AdminPage";
 import Page404 from "./pages/Page404";
-
-
 
 export const authRoutes = [
     {
@@ -30,7 +27,6 @@ export const publicRoutes = [
     {
         path: LOGIN_ROUTE,
         Element: <AuthPage/>,
-
     },
     {
         path: REGISTRATION_ROUTE,

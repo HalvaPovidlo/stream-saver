@@ -6,11 +6,12 @@ import {LOGIN_ROUTE, MAIN_PAGE_ROUTE, REGISTRATION_ROUTE} from "../utils/constan
 import {login, registration} from "../http/userAPI";
 import {Button, Card, Container, FormControl, TextField} from "@mui/material";
 import React from 'react';
+import {User} from '../store/UserStore';
 
 const AuthPage = observer(() => {
-    let navigate = useNavigate()
-    // @ts-expect-error TS(2339): Property 'user' does not exist on type 'null'.
-    let {user} = useContext(Context);
+    const navigate = useNavigate()
+
+    const {userStore} = useContext(Context);
     const location = useLocation();
     const isLogin = location.pathname === LOGIN_ROUTE;
     const [email, setEmail] = useState("")
@@ -18,16 +19,13 @@ const AuthPage = observer(() => {
 
     const click = async () => {
         try {
-            let currentUser;
+            let currentUser: User;
             if (isLogin) {
                 currentUser = await login(email, password)
             } else {
                 currentUser = await registration(email, password)
             }
-
-            user.setUser(currentUser);
-            user.setIsAuth(true)
-
+            userStore.setUser(currentUser);
             navigate(MAIN_PAGE_ROUTE)
 
         } catch (e) {
@@ -35,6 +33,7 @@ const AuthPage = observer(() => {
             alert(e.response.data.message())
         }
     }
+
     return (
         <Container className={"d-flex justify-content-center align-items-center"}
                    style={{height: window.innerHeight - 56}}

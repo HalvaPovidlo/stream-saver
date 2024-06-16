@@ -1,9 +1,15 @@
 import {Box, Modal} from "@mui/material";
 import VideoJS from "./VideoJs";
 import React from "react";
+import {IVideoJSConfig} from "../pages/MainPage";
 
+interface IVideoPlayerProps {
+    isPlayerOpen: boolean;
+    handleClose: (value: React.SetStateAction<boolean>) => void;
+    playerOptions: IVideoJSConfig | null
+}
 
-const VideoPlayer = (props: any) => {
+const VideoPlayer = (props: IVideoPlayerProps) => {
     return (
         <Modal className='modal-size'
                open={props.isPlayerOpen}
@@ -12,7 +18,7 @@ const VideoPlayer = (props: any) => {
                aria-describedby="modal-modal-description"
         >
             <Box>
-                <VideoJS className='video-player' options={props.videoJsOptions}/>
+                <VideoJS options={props.playerOptions}/>
             </Box>
         </Modal>
     );

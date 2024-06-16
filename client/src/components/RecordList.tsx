@@ -1,44 +1,40 @@
-import { useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import Context from "../Context";
-import { List, Typography } from "@mui/material";
+import {List, ListItem, Typography} from "@mui/material";
 
-import { observer } from "mobx-react-lite";
-import Record from "./Record";
+import {observer} from "mobx-react-lite";
+import {Record} from "../store/RecordStore";
 import ChannelCarousel from "./ChannelCarousel";
 import React from "react";
 
-const RecordList = observer((props) => {
-  // @ts-expect-error TS(2339): Property 'records' does not exist on type 'null'.
-  const { records } = useContext(Context);
-  const [groupedData, setGroupedData] = useState([]);
+interface IRecordListProps {
+    openPlayer: (videoURL: string) => void;
+}
 
-  useEffect(() => {
-    setGroupedData(records.groupVideosByChannelName());
-  }, [records.records]); //recheck
+const RecordList = observer((props: IRecordListProps) => {
+    const {recordStore} = useContext(Context);
+    const [groupedData, setGroupedData] = useState<Record[][]>([]);
 
-  return (
-    <List>
-      <Typography sx={{ marginBottom: "10px" }} variant="h4">
-        Recorded videos
-      </Typography>
-      {groupedData.map((d) => (
-        <>
-          {
-            // @ts-expect-error
-            <Typography variant={"h5"}>{d[0].channel.name}:</Typography>
-          }
-          <ChannelCarousel
-            // @ts-expect-error TS(2339): Property 'openPlayer' does not exist on type 'obje... Remove this comment to see the full error message
-            openPlayer={props.openPlayer}
-            channelRecords={d}
-            // @ts-expect-error TS(2339): Property 'channelName' does not exist on type 'nev... Remove this comment to see the full error message
-            key={d.channelName}
-          />
-        </>
-      ))}
-    </List>
-  );
+    useEffect(() => {
+        setGroupedData(recordStore.groupVideosByChannelName());
+    }, [recordStore, recordStore.records]);
+
+    return (
+        <List>
+            <Typography sx={{marginBottom: "10px"}} variant="h4">
+                Recorded videos
+            </Typography>
+            {groupedData.map((d) => (
+                <ListItem key={d[0].channel.name}>
+                    {<Typography variant={"h5"}>{d[0].channel.name}:</Typography>}
+                    <ChannelCarousel
+                        openPlayer={props.openPlayer}
+                        channelRecords={d}
+                    />
+                </ListItem>
+            ))}
+        </List>
+    );
 });
 export default RecordList;
-// <Record key={r.id} openPlayer={props.openPlayer}    record={r}></Record>
-//
+

@@ -1,13 +1,16 @@
 import React from 'react';
 import {Typography} from "@mui/material";
 
-const ErrorInfoPage = (props: any) => {
+interface IErrorInfoPageProps {
+    error: Error
+}
+
+const ErrorInfoPage = (props: IErrorInfoPageProps) => {
     const {error} = props;
     return (
         <div className="container">
             <Typography variant='h2'>Something went wrong:</Typography>
-            //  @ts-expect-error
-            <Typography variant = 'body1'>{error?.message}</Typography>
+            <Typography variant = 'body1'>{error.message}</Typography>
         </div>
     );
 };

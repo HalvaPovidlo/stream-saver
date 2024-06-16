@@ -1,27 +1,43 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable } from "mobx";
+import z from "zod";
+
+export const UserSchema = z.object({
+  email: z.string(),
+  role: z.string(),
+  id: z.number(),
+  exp: z.number(),
+  iat: z.number(),
+});
+
+export type User = z.infer<typeof UserSchema>;
 
 export default class UserStore {
-    _isAuth: any;
-    _user: any;
-    constructor() {
-        this._isAuth = false
-        this._user = {}
-        makeAutoObservable(this)
-    }
+  _isAuth = false;
+  _user: User | null;
 
-    setIsAuth(bool: any) {
-        this._isAuth = bool
-    }
+  constructor() {
+    this._isAuth = false;
+    this._user = null;
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
 
-    setUser(user: any) {
-        this._user = user
+  setUser(user: User): void {
+    if (UserSchema.parse(user)) {
+      this._isAuth = true;
+      this._user = user;
     }
+  }
 
-    get isAuth() {
-        return this._isAuth
-    }
+  removeUser(): void {
+    this._isAuth = false;
+    this._user = null;
+  }
 
-    get user() {
-        return this._user
-    }
+  get isAuth(): boolean {
+    return this._isAuth;
+  }
+
+  get user(): User | null {
+    return this._user;
+  }
 }
